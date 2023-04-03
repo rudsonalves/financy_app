@@ -4,30 +4,29 @@ import 'package:flutter/material.dart';
 
 import '../../common/constants/app_routes.dart';
 import '../../common/constants/app_colors.dart';
-import '../../features/sign_up/sign_up_state.dart';
 import '../../services/mock_auth_servide.dart';
 import '../../common/widgets/simple_message_dialog.dart';
-import '../../features/sign_up/sign_up_controller.dart';
 import '../../common/widgets/custom_text_form_field.dart';
 import '../../common/widgets/custom_text_button.dart';
 import '../../common/widgets/password_form_field.dart';
 import '../../common/widgets/primary_button.dart';
 import '../../common/widgets/title_text.dart';
 import '../../common/utils/sign_validator.dart';
+import 'sign_in_controller.dart';
+import 'sign_ip_state.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  final TextEditingController _nameController = TextEditingController();
+class _SignInPageState extends State<SignInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  final SignUpController _controller = SignUpController(MockAuthService());
+  final SignInController _controller = SignInController(MockAuthService());
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -35,7 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
   void initState() {
     super.initState();
     _controller.addListener(() async {
-      if (_controller.state is SignUpStateLoading) {
+      if (_controller.state is SignInStateLoading) {
         showDialog(
           context: context,
           builder: (context) => const Center(
@@ -45,7 +44,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
         );
       }
-      if (_controller.state is SignUpStateSuccess) {
+      if (_controller.state is SignInStateSuccess) {
         Navigator.of(context).pop();
         Navigator.push(
           context,
@@ -61,8 +60,8 @@ class _SignUpPageState extends State<SignUpPage> {
         );
       }
 
-      if (_controller.state is SignUpStateError) {
-        final error = _controller.state as SignUpStateError;
+      if (_controller.state is SignInStateError) {
+        final error = _controller.state as SignInStateError;
         Navigator.of(context).pop();
         await simpleMessageDialog(
           context: context,
@@ -76,7 +75,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void dispose() {
-    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _controller.dispose();
@@ -89,9 +87,9 @@ class _SignUpPageState extends State<SignUpPage> {
       body: ListView(
         padding: const EdgeInsets.all(10),
         children: [
-          const TitleTex(texts: ['Start Saving', 'Your Money!']),
+          const TitleTex(texts: ['', 'Welcome Back!']),
           Image.asset(
-            'assets/images/sign_up.png',
+            'assets/images/sign_in.png',
             height: 180,
           ),
           //
@@ -99,14 +97,6 @@ class _SignUpPageState extends State<SignUpPage> {
             key: _formKey,
             child: Column(
               children: [
-                CustomTextFormField(
-                  controller: _nameController,
-                  labelText: 'Your Name',
-                  hintText: 'Your Name',
-                  textCapitalization: TextCapitalization.words,
-                  textInputAction: TextInputAction.next,
-                  validator: SignValidator.validateName,
-                ),
                 CustomTextFormField(
                   controller: _emailController,
                   labelText: 'Your Email',
@@ -117,32 +107,25 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 PasswordFormField(
                   controller: _passwordController,
-                  labelText: 'Choose Your Password',
+                  labelText: 'Your Password',
                   helperText:
                       'Must have at least 8 characters, 1 capital letter and 1 number.',
                   hintText: '*********',
                   textInputAction: TextInputAction.next,
                   validator: SignValidator.validatePassword,
                 ),
-                PasswordFormField(
-                  labelText: 'Confirm Your Password',
-                  hintText: '*********',
-                  textInputAction: TextInputAction.done,
-                  validator: (value) => SignValidator.validateConfirmPassword(
-                      _passwordController.text, value!),
-                ),
+                const SizedBox(height: 142),
               ],
             ),
           ),
           PrimaryButton(
-            title: 'Sign Up',
+            title: 'Sign In',
             onTab: () async {
               final valit = _formKey.currentState != null &&
                   _formKey.currentState!.validate();
 
               if (valit) {
-                await _controller.signUp(
-                  name: _nameController.text,
+                await _controller.signIn(
                   email: _emailController.text,
                   password: _passwordController.text,
                 );
@@ -152,10 +135,10 @@ class _SignUpPageState extends State<SignUpPage> {
             },
           ),
           CustomTextButton(
-              fistMessage: 'Already have account?',
-              secMessage: 'Sign In',
+              fistMessage: 'Don\'t have account?',
+              secMessage: 'Sign Up',
               onPressed: () {
-                Navigator.of(context).popAndPushNamed(AppRoute.signInPage);
+                Navigator.of(context).popAndPushNamed(AppRoute.signUpPage);
               }),
           const SizedBox(height: 10),
         ],
