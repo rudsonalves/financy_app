@@ -1,5 +1,7 @@
+import 'package:financy_app/features/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';
 
+import 'common/constants/app_routes.dart';
 import './common/themes/default_theme.dart';
 import 'features/sign_up/sign_up_page.dart';
 import './features/onboarding/onboarding_page.dart';
@@ -22,12 +24,13 @@ class App extends StatelessWidget {
       //     secondary: Colors.yellowAccent,
       //   ),
       // ),
-      home: const SignUpPage(),
+      initialRoute: AppRoute.splachPage,
       debugShowCheckedModeBanner: false,
       routes: {
-        SplashPage.routeName: (context) => const SplashPage(),
-        OnboardingPage.routeName: (context) => const OnboardingPage(),
-        SignUpPage.routeName: (context) => const SignUpPage(),
+        AppRoute.splachPage: (context) => const SplashPage(),
+        AppRoute.initialPage: (context) => const OnboardingPage(),
+        AppRoute.signUpPage: (context) => const SignUpPage(),
+        AppRoute.signInPage: (context) => const SignInPage(),
       },
     );
   }

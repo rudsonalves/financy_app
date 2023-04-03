@@ -1,7 +1,7 @@
-// Validator class
+// SignValidator class
 
-class Validator {
-  Validator._();
+class SignValidator {
+  SignValidator._();
 
   static String? validateName(value) {
     final RegExp exp = RegExp(r"^([A-À-ÿ][a-z\-. ']+[ ])*");

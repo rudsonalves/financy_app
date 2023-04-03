@@ -1,15 +1,12 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
+import '../../common/constants/app_routes.dart';
 import '../../common/widgets/custom_text_button.dart';
 import '../../common/widgets/title_text.dart';
 import '../../common/widgets/primary_button.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
-
-  static const routeName = '/onboarding';
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +21,14 @@ class OnboardingPage extends StatelessWidget {
           PrimaryButton(
             title: 'Get Started',
             onTab: () {
-              log('Pressed!');
+              Navigator.of(context).pushNamed(AppRoute.signUpPage);
             },
           ),
           CustomTextButton(
             fistMessage: 'Already have account?',
             secMessage: 'Log In',
             onPressed: () {
-              log('Login message');
+              Navigator.of(context).pushNamed(AppRoute.signInPage);
             },
           ),
           const SizedBox(height: 10),
