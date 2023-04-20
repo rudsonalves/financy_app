@@ -1,9 +1,9 @@
 import 'package:financy_app/features/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';
 
-import 'common/constants/app_routes.dart';
+import './common/constants/app_routes.dart';
 import './common/themes/default_theme.dart';
-import 'features/sign_up/sign_up_page.dart';
+import './features/sign_up/sign_up_page.dart';
 import './features/onboarding/onboarding_page.dart';
 import './features/splash/splash_page.dart';
 
