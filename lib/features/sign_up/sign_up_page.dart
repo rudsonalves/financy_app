@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../common/constants/app_routes.dart';
 import '../../common/constants/app_colors.dart';
 import '../../features/sign_up/sign_up_state.dart';
+import '../../locator.dart';
 import '../../services/mock_auth_servide.dart';
 import '../../common/widgets/simple_message_dialog.dart';
 import '../../features/sign_up/sign_up_controller.dart';
@@ -23,13 +24,11 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  final SignUpController _controller = SignUpController(MockAuthService());
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final SignUpController _controller = locator.get<SignUpController>();
 
   @override
   void initState() {

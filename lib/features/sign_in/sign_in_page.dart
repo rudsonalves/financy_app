@@ -1,10 +1,10 @@
 import 'dart:developer';
 
+import 'package:financy_app/locator.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/constants/app_routes.dart';
 import '../../common/constants/app_colors.dart';
-import '../../services/mock_auth_servide.dart';
 import '../../common/widgets/simple_message_dialog.dart';
 import '../../common/widgets/custom_text_form_field.dart';
 import '../../common/widgets/custom_text_button.dart';
@@ -12,8 +12,8 @@ import '../../common/widgets/password_form_field.dart';
 import '../../common/widgets/primary_button.dart';
 import '../../common/widgets/title_text.dart';
 import '../../common/utils/sign_validator.dart';
-import 'sign_in_controller.dart';
-import 'sign_ip_state.dart';
+import './sign_in_controller.dart';
+import './sign_ip_state.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -23,12 +23,10 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  final SignInController _controller = SignInController(MockAuthService());
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final SignInController _controller = locator.get<SignInController>();
 
   @override
   void initState() {

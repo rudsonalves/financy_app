@@ -14,7 +14,7 @@ class SignValidator {
   }
 
   static String? validateEmail(value) {
-    final RegExp exp = RegExp(r'^[\w-\.]+@[\w-\.]+\.[a-z]{2,3}$');
+    final RegExp exp = RegExp(r'^[\w-\.]+@[\w-\.]+\.[a-z]{2,3}');
     if (value!.isEmpty) {
       return 'This field cannot be empty!';
     } else if (!exp.hasMatch(value)) {
